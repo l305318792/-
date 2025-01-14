@@ -1,0 +1,79 @@
+server:
+  port: 9281
+  tomcat:
+    max-threads: 200
+    min-spare-threads: 10
+    max-connections: 10000
+    connection-timeout: 5000
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+    web-application-type: servlet
+    lazy-initialization: false
+    register-shutdown-hook: true
+    cloud-platform: none
+  boot:
+    admin:
+      auto-registration: false
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/hospital_manager?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&allowMultiQueries=true
+    username: root
+    password: 123456
+    hikari:
+      pool-name: HospitalHikariPool
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
+      connection-test-query: SELECT 1
+      max-lifetime: 1200000
+      auto-commit: true
+      validation-timeout: 3000
+      leak-detection-threshold: 60000
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: 
+      database: 0
+      timeout: 2000
+      jedis:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1
+          test-on-borrow: false
+
+mybatis-plus:
+  mapper-locations: classpath*:mybatis/*.xml
+  type-aliases-package: com.rabbiter.hospital.pojo
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    cache-enabled: true
+    use-generated-keys: true
+    default-executor-type: REUSE
+    jdbc-type-for-null: NULL
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+      table-underline: true
+    banner: false
+
+logging:
+  level:
+    root: INFO
+    com.rabbiter.hospital: DEBUG
+    org.springframework: WARN
+    com.baomidou.mybatisplus: INFO
+    org.springframework.jdbc.core: DEBUG
+
+
+
